@@ -1,0 +1,34 @@
+run = "python main.py"
+entrypoint = "main.py"
+modules = ["nodejs-20", "python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "python main.py"]
+deploymentTarget = "cloudrun"
+
+packages = [
+    "python3",
+    "pip",
+]
+
+[languages]
+
+[languages.python]
+pattern = "**/*.py"
+
+[languages.python.languageServer]
+start = "pylsp"
+
+[env]
+PYTHONPATH = "${PYTHONPATH}:${workspaceFolder}"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[[ports]]
+localPort = 8501
+externalPort = 3000

@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.env.local
+.pythonlibs
+__pycache__
+*.pyc
+.cursorrules

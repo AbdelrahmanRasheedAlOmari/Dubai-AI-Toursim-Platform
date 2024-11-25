@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Tourism Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/framer-motion@latest"></script>
+    <script defer src="/static/js/app.js"></script>
+    <style>
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 16px;
+            background: #007acc;
+            border-radius: 20px;
+            width: fit-content;
+            margin-bottom: 16px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: typing-dot 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing-dot {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="border-b bg-white">
+        <div class="container mx-auto flex h-16 items-center justify-between px-4">
+            <div class="flex items-center space-x-2">
+                <svg viewBox="0 0 100 32" class="h-8 w-24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 8L28 24L36 8M44 8L52 24L60 8" stroke="#009dff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M68 8L76 24L84 8" stroke="#E81D52" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="text-xl font-bold text-[#2C2C2C]">DUBAI TOURISM</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative" id="languageDropdown">
+                    <button class="flex items-center space-x-2 rounded-md border px-4 py-2">
+                        <i data-lucide="globe" class="h-4 w-4"></i>
+                        <span id="selectedLanguage">English</span>
+                    </button>
+                    <div class="absolute right-0 mt-2 hidden w-48 rounded-md bg-white shadow-lg" id="languageMenu">
+                        <!-- Language options will be populated by JavaScript -->
+                    </div>
+                </div>
+                <button class="rounded-md p-2 hover:bg-gray-100">
+                    <i data-lucide="log-out" class="h-4 w-4"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden fixed inset-0 bg-white/90 flex items-center justify-center z-50">
+                <div class="text-center">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dubai-skyline-silhouette.png" 
+                         alt="Dubai Skyline" 
+                         class="w-64 h-auto mb-6 opacity-50"/>
+                    <h2 class="text-2xl font-bold mb-4 dubai-gradient">Generating Your Dubai Experience</h2>
+                    <div class="loading-bar mb-4"></div>
+                    <p class="text-gray-600">Creating your personalized journey...</p>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="rounded-lg bg-white p-6 shadow-lg">
+                <div class="flex flex-col items-center">
+                    <div class="relative mb-4">
+                        <div class="relative speaking-avatar">
+                            <div class="relative h-24 w-24 overflow-hidden rounded-full border-4 border-[#007acc] shadow-lg">
+                                <img
+                                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jOhLU28iALz0Huxz2QAeCmn2So9U0G.png"
+                                    alt="Dubai Tourism Assistant"
+                                    class="h-full w-full object-cover"
+                                />
+                            </div>
+                            <div class="absolute -bottom-1 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full border-2 border-white bg-[#c41e3a] status-dot"></div>
+                        </div>
+                        <div class="absolute -right-1 top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#007acc] text-white shadow-md">
+                            <i data-lucide="globe" class="h-3 w-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="h-[400px] w-full overflow-y-auto" id="chatContainer">
+                        <!-- Messages will be populated here -->
+                    </div>
+
+                    <form id="chatForm" class="mt-6 flex w-full max-w-2xl items-center space-x-2">
+                        <input
+                            type="text"
+                            id="userInput"
+                            placeholder="Type your message..."
+                            class="flex-1 rounded-full border border-gray-300 bg-white px-6 py-3 shadow-sm transition-colors focus:border-[#009dff] focus:outline-none focus:ring-2 focus:ring-[#009dff]/20"
+                        />
+                        <button type="submit" class="h-12 w-12 rounded-full bg-[#E81D52] hover:bg-[#d41848] text-white flex items-center justify-center">
+                            <i data-lucide="send" class="h-5 w-5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Itinerary Display Section -->
+            <div id="itinerarySection" class="hidden">
+                <div id="itineraryContainer" class="mt-4 text-left font-mono"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html> 
